@@ -87,19 +87,17 @@ export const LoginPage: React.FC = () => {
               mb: 2
             }}>
                <Typography variant="h3" component="h1" fontWeight="800" sx={{
-                 background: 'var(--gradient-makers)',
-                 WebkitBackgroundClip: 'text',
-                 WebkitTextFillColor: 'transparent',
+                 color: 'var(--color-primary)',
                  letterSpacing: '-1px'
                }}>
                  makers
                </Typography>
             </Box>
             <Typography variant="h5" component="h2" fontWeight="bold">
-              Welcome Back
+              Bienvenido de nuevo
             </Typography>
             <Typography variant="body2" sx={{ mt: 1, opacity: 0.9 }}>
-              Sign in to access your loan account
+              Inicia sesión para acceder a tu cuenta
             </Typography>
           </Box>
 
@@ -112,7 +110,7 @@ export const LoginPage: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="Email"
+              label="Correo Electrónico"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -133,7 +131,7 @@ export const LoginPage: React.FC = () => {
 
             <TextField
               fullWidth
-              label="Password"
+              label="Contraseña"
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -185,18 +183,18 @@ export const LoginPage: React.FC = () => {
                 transition: 'all 0.2s',
               }}
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
 
             <Box sx={{ textAlign: 'center' }}>
               <Typography variant="body2">
-                Don't have an account?{' '}
+                ¿No tienes una cuenta?{' '}
                 <Link
                   component={RouterLink}
                   to="/register"
                   sx={{ color: 'white', fontWeight: 'bold', textDecoration: 'none' }}
                 >
-                  Sign Up
+                  Regístrate
                 </Link>
               </Typography>
             </Box>

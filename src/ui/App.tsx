@@ -17,37 +17,37 @@ import { UserRole } from '@domain/enums'
 const UserDashboard = React.lazy(() => import('./pages/UserDashboard'))
 const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'))
 
-// Tema actualizado con colores de Makers
+// Tema actualizado con colores Solidos Azules
 const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#2d3561',      // Color principal del logo makers
-      light: '#3d4575',
-      dark: '#1d2541',
+      main: '#1976d2',      // Azul solido principal
+      light: '#42a5f5',
+      dark: '#1565c0',
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#e91e8c',      // Rosa/magenta del gradiente makers
-      light: '#ff4081',
-      dark: '#c2185b',
+      main: '#1565c0',      // Azul oscuro como secundario
+      light: '#5e92f3',
+      dark: '#003c8f',
       contrastText: '#ffffff',
     },
     info: {
-      main: '#00bcd4',      // Cyan del gradiente makers
-      light: '#00e5ff',
-      dark: '#0097a7',
+      main: '#0288d1',
+      light: '#03a9f4',
+      dark: '#01579b',
     },
     success: {
-      main: '#8bc34a',      // Verde lima del gradiente makers
-      light: '#b2ff59',
-      dark: '#689f38',
+      main: '#2e7d32',
+      light: '#4caf50',
+      dark: '#1b5e20',
     },
     warning: {
-      main: '#ff9800',
+      main: '#ed6c02',
     },
     error: {
-      main: '#f44336',
+      main: '#d32f2f',
     },
   },
   typography: {
@@ -64,7 +64,7 @@ export const App: React.FC = () => {
       <CssBaseline />
       <AuthProvider>
         <BrowserRouter>
-          <React.Suspense fallback={<div>Loading...</div>}>
+          <React.Suspense fallback={<div>Cargando...</div>}>
             <Routes>
               <Route path="/" element={<Navigate to="/login" replace />} />
               <Route path="/login" element={<LoginPage />} />

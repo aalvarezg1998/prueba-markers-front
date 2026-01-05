@@ -42,7 +42,7 @@ export const RegisterPage: React.FC = () => {
     setError('')
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match')
+      setError('Las contraseñas no coinciden')
       return
     }
 
@@ -59,7 +59,7 @@ export const RegisterPage: React.FC = () => {
       login(response)
       navigate('/user/dashboard')
     } catch (err: any) {
-      setError(err.message || 'An error occurred during registration')
+      setError(err.message || 'Ocurrió un error durante el registro')
     } finally {
       setLoading(false)
     }
@@ -97,19 +97,17 @@ export const RegisterPage: React.FC = () => {
               mb: 2
             }}>
                <Typography variant="h3" component="h1" fontWeight="800" sx={{
-                 background: 'var(--gradient-makers)',
-                 WebkitBackgroundClip: 'text',
-                 WebkitTextFillColor: 'transparent',
+                 color: 'var(--color-primary)',
                  letterSpacing: '-1px'
                }}>
                  makers
                </Typography>
             </Box>
             <Typography variant="h5" component="h2" fontWeight="bold">
-              Create Account
+              Crear Cuenta
             </Typography>
             <Typography variant="body2" sx={{ mt: 1, opacity: 0.9 }}>
-              Join us to start managing your loans
+              Únete para empezar a gestionar tus préstamos
             </Typography>
           </Box>
 
@@ -122,7 +120,7 @@ export const RegisterPage: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="Full Name"
+              label="Nombre Completo"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               required
@@ -142,7 +140,7 @@ export const RegisterPage: React.FC = () => {
 
             <TextField
               fullWidth
-              label="Email"
+              label="Correo Electrónico"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -163,7 +161,7 @@ export const RegisterPage: React.FC = () => {
 
             <TextField
               fullWidth
-              label="Password"
+              label="Contraseña"
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -197,7 +195,7 @@ export const RegisterPage: React.FC = () => {
 
             <TextField
               fullWidth
-              label="Confirm Password"
+              label="Confirmar Contraseña"
               type={showPassword ? 'text' : 'password'}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -236,18 +234,18 @@ export const RegisterPage: React.FC = () => {
                 transition: 'all 0.2s',
               }}
             >
-              {loading ? 'Creating Account...' : 'Sign Up'}
+              {loading ? 'Creando cuenta...' : 'Registrarse'}
             </Button>
 
             <Box sx={{ textAlign: 'center' }}>
               <Typography variant="body2">
-                Already have an account?{' '}
+                ¿Ya tienes una cuenta?{' '}
                 <Link
                   component={RouterLink}
                   to="/login"
                   sx={{ color: 'white', fontWeight: 'bold', textDecoration: 'none' }}
                 >
-                  Sign In
+                  Inicia Sesión
                 </Link>
               </Typography>
             </Box>

@@ -109,9 +109,22 @@ const UserDashboard: React.FC = () => {
     }
   }
 
+  const getTranslatedStatus = (status: LoanStatus) => {
+    switch (status) {
+      case LoanStatus.Pending:
+        return 'Pendiente'
+      case LoanStatus.Approved:
+        return 'Aprobado'
+      case LoanStatus.Rejected:
+        return 'Rechazado'
+      default:
+        return status
+    }
+  }
+
   return (
     <Box>
-      <AppBar position="static" sx={{ background: 'var(--gradient-makers)', color: 'white' }}>
+      <AppBar position="static" sx={{ background: 'var(--color-primary)', color: 'white' }}>
         <Toolbar>
           <Box className="gradient-makers-text" sx={{ 
             backgroundColor: 'white',
@@ -121,9 +134,7 @@ const UserDashboard: React.FC = () => {
             mr: 2
           }}>
              <Typography variant="h6" component="div" fontWeight="800" sx={{
-               background: 'var(--gradient-makers)',
-               WebkitBackgroundClip: 'text',
-               WebkitTextFillColor: 'transparent',
+               color: 'var(--color-primary)',
                letterSpacing: '-0.5px'
              }}>
                makers loan system
@@ -142,34 +153,34 @@ const UserDashboard: React.FC = () => {
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
           <Typography variant="h4" fontWeight="bold">
-            My Loans
+            Mis Préstamos
           </Typography>
           <Button
             variant="contained"
             startIcon={<Add />}
             onClick={() => setOpenDialog(true)}
             sx={{
-              background: 'var(--gradient-makers)',
+              background: 'var(--color-primary)',
               color: 'white',
               fontWeight: 'bold',
               px: 3,
             }}
           >
-            Request New Loan
+            Solicitar Nuevo Préstamo
           </Button>
         </Box>
 
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
         {loading ? (
-          <Typography>Loading...</Typography>
+          <Typography>Cargando...</Typography>
         ) : loans.length === 0 ? (
           <Paper sx={{ p: 4, textAlign: 'center' }}>
             <Typography variant="h6" color="text.secondary">
-              You don't have any loans yet
+              Aún no tienes préstamos
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              Click "Request New Loan" to get started
+              Haz clic en "Solicitar Nuevo Préstamo" para comenzar
             </Typography>
           </Paper>
         ) : (
@@ -183,35 +194,35 @@ const UserDashboard: React.FC = () => {
                         ${loan.amount.toLocaleString()}
                       </Typography>
                       <Chip
-                        label={loan.status}
+                        label={getTranslatedStatus(loan.status)}
                         color={getStatusColor(loan.status)}
                         size="small"
                       />
                     </Box>
                     
                     <Typography variant="body2" color="text.secondary" gutterBottom>
-                      <strong>Term:</strong> {loan.termMonths} months
+                      <strong>Plazo:</strong> {loan.termMonths} meses
                     </Typography>
                     
                     <Typography variant="body2" color="text.secondary" gutterBottom>
-                      <strong>Monthly Payment:</strong> ${loan.monthlyPayment.toLocaleString()}
+                      <strong>Pago Mensual:</strong> ${loan.monthlyPayment.toLocaleString()}
                     </Typography>
                     
                     <Typography variant="body2" color="text.secondary" gutterBottom>
-                      <strong>Total Payment:</strong> ${loan.totalPayment.toLocaleString()}
+                      <strong>Pago Total:</strong> ${loan.totalPayment.toLocaleString()}
                     </Typography>
                     
                     <Typography variant="body2" color="text.secondary" gutterBottom>
-                      <strong>Purpose:</strong> {loan.purpose}
+                      <strong>Propósito:</strong> {loan.purpose}
                     </Typography>
                     
                     <Typography variant="body2" color="text.secondary" gutterBottom>
-                      <strong>Requested:</strong> {new Date(loan.requestedAt).toLocaleDateString()}
+                      <strong>Solicitado:</strong> {new Date(loan.requestedAt).toLocaleDateString()}
                     </Typography>
                     
                     {loan.rejectionReason && (
                       <Alert severity="error" sx={{ mt: 2 }}>
-                        <strong>Rejection Reason:</strong> {loan.rejectionReason}
+                        <strong>Razón de Rechazo:</strong> {loan.rejectionReason}
                       </Alert>
                     )}
                   </CardContent>
@@ -223,13 +234,13 @@ const UserDashboard: React.FC = () => {
       </Container>
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Request New Loan</DialogTitle>
+        <DialogTitle>Solicitar Nuevo Préstamo</DialogTitle>
         <DialogContent>
           {formError && <Alert severity="error" sx={{ mb: 2 }}>{formError}</Alert>}
           
           <TextField
             fullWidth
-            label="Loan Amount ($)"
+            label="Monto del Préstamo ($)"
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -239,32 +250,32 @@ const UserDashboard: React.FC = () => {
           
           <TextField
             fullWidth
-            label="Term (months)"
+            label="Plazo (meses)"
             type="number"
             value={termMonths}
             onChange={(e) => setTermMonths(e.target.value)}
             sx={{ mb: 2 }}
-            helperText="Min: 6 months - Max: 360 months"
+            helperText="Min: 6 meses - Max: 360 meses"
           />
           
           <TextField
             fullWidth
-            label="Purpose"
+            label="Propósito"
             multiline
             rows={4}
             value={purpose}
             onChange={(e) => setPurpose(e.target.value)}
-            helperText="Min: 10 characters - Max: 500 characters"
+            helperText="Min: 10 caracteres - Max: 500 caracteres"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
+          <Button onClick={() => setOpenDialog(false)}>Cancelar</Button>
           <Button
             onClick={handleSubmitLoan}
             variant="contained"
             disabled={submitting}
           >
-            {submitting ? 'Submitting...' : 'Submit Request'}
+            {submitting ? 'Enviando...' : 'Enviar Solicitud'}
           </Button>
         </DialogActions>
       </Dialog>

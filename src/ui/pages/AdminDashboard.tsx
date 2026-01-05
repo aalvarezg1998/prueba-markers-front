@@ -128,9 +128,22 @@ const AdminDashboard: React.FC = () => {
     }
   }
 
+  const getTranslatedStatus = (status: LoanStatus) => {
+    switch (status) {
+      case LoanStatus.Pending:
+        return 'Pendiente'
+      case LoanStatus.Approved:
+        return 'Aprobado'
+      case LoanStatus.Rejected:
+        return 'Rechazado'
+      default:
+        return status
+    }
+  }
+
   return (
     <Box>
-      <AppBar position="static" sx={{ background: 'var(--gradient-makers)', color: 'white' }}>
+      <AppBar position="static" sx={{ background: 'var(--color-primary)', color: 'white' }}>
         <Toolbar>
           <Box className="gradient-makers-text" sx={{ 
             backgroundColor: 'white',
@@ -140,9 +153,7 @@ const AdminDashboard: React.FC = () => {
             mr: 2
           }}>
              <Typography variant="h6" component="div" fontWeight="800" sx={{
-               background: 'var(--gradient-makers)',
-               WebkitBackgroundClip: 'text',
-               WebkitTextFillColor: 'transparent',
+               color: 'var(--color-primary)',
                letterSpacing: '-0.5px'
              }}>
                makers admin
@@ -150,7 +161,7 @@ const AdminDashboard: React.FC = () => {
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 0, opacity: 0.8, mr: 2, display: { xs: 'none', sm: 'block' } }}>
-            Dashboard
+            Panel
           </Typography>
           <Typography variant="body1" sx={{ mr: 2 }}>
             {user?.fullName}
@@ -163,26 +174,26 @@ const AdminDashboard: React.FC = () => {
 
       <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
         <Typography variant="h4" fontWeight="bold" sx={{ mb: 3 }}>
-          All Loan Requests
+          Solicitudes de Préstamos
         </Typography>
 
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         {actionError && <Alert severity="error" sx={{ mb: 2 }}>{actionError}</Alert>}
 
         {loading ? (
-          <Typography>Loading...</Typography>
+          <Typography>Cargando...</Typography>
         ) : (
           <TableContainer component={Paper} elevation={3}>
             <Table>
               <TableHead>
                 <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                  <TableCell><strong>User</strong></TableCell>
-                  <TableCell><strong>Amount</strong></TableCell>
-                  <TableCell><strong>Term</strong></TableCell>
-                  <TableCell><strong>Purpose</strong></TableCell>
-                  <TableCell><strong>Status</strong></TableCell>
-                  <TableCell><strong>Requested</strong></TableCell>
-                  <TableCell align="center"><strong>Actions</strong></TableCell>
+                  <TableCell><strong>Usuario</strong></TableCell>
+                  <TableCell><strong>Monto</strong></TableCell>
+                  <TableCell><strong>Plazo</strong></TableCell>
+                  <TableCell><strong>Propósito</strong></TableCell>
+                  <TableCell><strong>Estado</strong></TableCell>
+                  <TableCell><strong>Solicitado</strong></TableCell>
+                  <TableCell align="center"><strong>Acciones</strong></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -197,7 +208,7 @@ const AdminDashboard: React.FC = () => {
                       </Typography>
                     </TableCell>
                     <TableCell>${loan.amount.toLocaleString()}</TableCell>
-                    <TableCell>{loan.termMonths} months</TableCell>
+                    <TableCell>{loan.termMonths} meses</TableCell>
                     <TableCell sx={{ maxWidth: 200 }}>
                       <Typography variant="body2" noWrap>
                         {loan.purpose}
@@ -205,7 +216,7 @@ const AdminDashboard: React.FC = () => {
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={loan.status}
+                        label={getTranslatedStatus(loan.status)}
                         color={getStatusColor(loan.status)}
                         size="small"
                       />
@@ -224,7 +235,7 @@ const AdminDashboard: React.FC = () => {
                             onClick={() => handleApproveLoan(loan.id)}
                             disabled={processing}
                           >
-                            Approve
+                            Aprobar
                           </Button>
                           <Button
                             size="small"
@@ -234,13 +245,13 @@ const AdminDashboard: React.FC = () => {
                             onClick={() => openRejectDialog(loan)}
                             disabled={processing}
                           >
-                            Reject
+                            Rechazar
                           </Button>
                         </Box>
                       )}
                       {loan.status !== LoanStatus.Pending && (
                         <Typography variant="caption" color="text.secondary">
-                          Processed
+                          Procesado
                         </Typography>
                       )}
                     </TableCell>
@@ -253,32 +264,32 @@ const AdminDashboard: React.FC = () => {
       </Container>
 
       <Dialog open={rejectDialogOpen} onClose={() => setRejectDialogOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Reject Loan Request</DialogTitle>
+        <DialogTitle>Rechazar Solicitud</DialogTitle>
         <DialogContent>
           <Alert severity="warning" sx={{ mb: 2 }}>
-            Please provide a reason for rejecting this loan request.
+            Por favor, indique la razón para rechazar esta solicitud.
           </Alert>
           
           <TextField
             fullWidth
-            label="Rejection Reason"
+            label="Razón de Rechazo"
             multiline
             rows={4}
             value={rejectionReason}
             onChange={(e) => setRejectionReason(e.target.value)}
             sx={{ mt: 2 }}
-            helperText="Min: 10 characters - Max: 500 characters"
+            helperText="Min: 10 caracteres - Max: 500 caracteres"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setRejectDialogOpen(false)}>Cancel</Button>
+          <Button onClick={() => setRejectDialogOpen(false)}>Cancelar</Button>
           <Button
             onClick={handleRejectLoan}
             variant="contained"
             color="error"
             disabled={processing || rejectionReason.length < 10}
           >
-            {processing ? 'Rejecting...' : 'Confirm Rejection'}
+            {processing ? 'Rechazando...' : 'Confirmar Rechazo'}
           </Button>
         </DialogActions>
       </Dialog>
